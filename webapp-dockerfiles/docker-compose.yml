@@ -1,0 +1,11 @@
+services:
+  # Webapp
+  phpwebapp:
+    build:
+      context: .
+    image: oluwaseuna/phpwebapp
+    container_name: phpwebapp
+    ports:
+      - "81:80"
+    environment:
+      - AWS_REGION=eu-west-1
