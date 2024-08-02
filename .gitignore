@@ -1,3 +1,5 @@
 # Ignore .SQL File
 
 *.sql
+
+*.env
