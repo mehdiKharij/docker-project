@@ -1,17 +1,17 @@
 services:
   # MySQL DB Service
   clouddb:
-    build:
-      context: .
-    image: mysql
+    #build:
+      #context: .
+    image: mysql:8.0.37
     container_name: clouddb
     ports:
       - "3306:3306"
     volumes:
       - clouddbdata:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD_FILE=./variables.env
+      - MYSQL_DATABASE=account
 
   # phpmyadmin to Manage MySQL DB
   phpmyadmin:
@@ -22,8 +22,8 @@ services:
       - "8081:80"
     environment:
       - PMA_HOST=clouddb
-      - PMA_USER=${PMA_USER}
-      - PMA_PASSWORD=${PMA_PASSWORD}
+      - PMA_USER_FILE=./variables.env
+      - PMA_PASSWORD_FILE=./variables.env
     depends_on:
       - clouddb
 
