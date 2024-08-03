@@ -12,8 +12,6 @@ services:
       - clouddb
   # MySQL DB Service
   clouddb:
-    #build:
-      #context: .
     image: mysql:8.0.37
     container_name: clouddb
     ports:

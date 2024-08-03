@@ -18,10 +18,8 @@ WORKDIR /var/www/html
 COPY . .
 
 # Set the correct permissions
-RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
-
-# Install AWS SDK for PHP
-RUN composer require aws/aws-sdk-php
+RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html && \
+    composer require aws/aws-sdk-php
 
 # Expose port 80
 EXPOSE 80

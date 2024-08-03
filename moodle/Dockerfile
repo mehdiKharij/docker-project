@@ -6,16 +6,16 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends unzip git curl && \
     docker-php-ext-install mysqli && \
     docker-php-ext-enable mysqli && \
-    git clone git://git.moodle.org/moodle.git && cd moodle && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
+    git clone git://git.moodle.org/moodle.git && cd moodle && \
     cp -rf ./* /var/www/html/
 
 # Set working directory
 WORKDIR /var/www/html
 
 # Set the correct permissions
-RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+RUN chown -R www-data:www-data /var/www/ && chmod -R 755 /var/www
 
 # Expose port 80
 EXPOSE 80
