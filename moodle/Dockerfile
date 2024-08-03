@@ -2,8 +2,8 @@
 FROM php:8.3-apache
 
 # Install necessary extensions, Apache mod_rewrite, and Composer
-RUN apt update && \
-    apt get install -y unzip git curl php8.3-cli php8.3-common php8.3-curl php8.3-xml php8.3-mbstring libapache2-mod-php && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends unzip git curl && \
     docker-php-ext-install mysqli && \
     docker-php-ext-enable mysqli && \
     git clone git://git.moodle.org/moodle.git && cd moodle && \
