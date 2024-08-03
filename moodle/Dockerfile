@@ -15,7 +15,7 @@ RUN apt-get update && \
 WORKDIR /var/www/html
 
 # Set the correct permissions
-RUN chown -R www-data:www-data /var/www/ && chmod -R 755 /var/www
+RUN chown -R www-data:www-data /var/www/ && chmod -R 777 /var/www
 
 # Expose port 80
 EXPOSE 80
