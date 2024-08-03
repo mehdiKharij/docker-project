@@ -1,4 +1,15 @@
 services:
+  moodleapp:
+    build:
+      context: .
+    image: moodleapp:1.0
+    container_name: moodleapp
+    ports:
+      - 80:80
+    volumes:
+      - moodledata:/var/www/moodledata
+    depends_on:
+      - clouddb
   # MySQL DB Service
   clouddb:
     #build:
@@ -10,8 +21,8 @@ services:
     volumes:
       - clouddbdata:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD_FILE=./variables.env
-      - MYSQL_DATABASE=account
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
 
   # phpmyadmin to Manage MySQL DB
   phpmyadmin:
@@ -22,10 +33,11 @@ services:
       - "8081:80"
     environment:
       - PMA_HOST=clouddb
-      - PMA_USER_FILE=./variables.env
-      - PMA_PASSWORD_FILE=./variables.env
+      - PMA_USER=${PMA_USER}
+      - PMA_PASSWORD=${PMA_PASSWORD}
     depends_on:
       - clouddb
 
 volumes:
   clouddbdata:
+  moodledata:
