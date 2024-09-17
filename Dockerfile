@@ -1,25 +1,32 @@
-# Base image
+# Use the official PHP 8.3 image with Apache
 FROM php:8.3-apache
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Install necessary PHP extensions
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+# Install dependencies and enable necessary Apache modules in a single RUN command
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    zip \
+    unzip \
+    git \
+    && docker-php-ext-install pdo pdo_mysql mysqli \
+    && a2enmod rewrite \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy composer.json
-COPY composer.json ./
-
-# Install PHP dependencies using Composer with no interaction
-RUN apt-get update && apt-get install -y git unzip
+# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader --no-suggest
 
-# Copy the rest of the application files
+# Copy the application files to the working directory
 COPY . .
 
-# Set the correct permissions
-RUN chown -R www-data:www-data /var/www/html
+# Install PHP dependencies using Composer
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Set the correct permissions for the web server
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
 
 # Expose port 80
 EXPOSE 80
