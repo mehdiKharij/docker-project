@@ -3,8 +3,8 @@ services:
   php-app:
     build:
       context: .
-    image: oluwaseuna/php-app
-    container_name: php-app
+    image: dammy-phpapp
+    container_name: dammy-phpapp
     ports:
       - "80:80"  # Expose port 80 on the container to port 8080 on localhost
     environment:
@@ -42,7 +42,7 @@ services:
       PMA_PORT: 3306
       PMA_USER: ${MYSQL_USER}
       PMA_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      # MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     depends_on:
       - db
 

@@ -1,5 +1,5 @@
 # Build stage: Install Composer dependencies
-FROM php:8.3-cli AS builder
+FROM php:8.3-cli AS dammy
 
 # Install necessary packages
 RUN apt-get update && apt-get install -y git unzip
@@ -23,7 +23,7 @@ FROM php:8.3-apache
 WORKDIR /var/www/html
 
 # Copy the installed dependencies from the builder stage
-COPY --from=builder /app/vendor /var/www/html/vendor
+COPY --from=dammy /app/vendor /var/www/html/vendor
 
 # Copy the rest of the application files
 COPY . .
