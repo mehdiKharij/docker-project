@@ -9,9 +9,9 @@ services:
     volumes:
       - moodledata:/var/www/moodledata
     depends_on:
-      - clouddb
+      - moodledb
   # MySQL DB Service
-  clouddb:
+  moodledb:
     image: mysql:8.0.36
     container_name: clouddb
     environment:
@@ -38,7 +38,7 @@ services:
       PMA_USER: ${MYSQL_USER}
       PMA_PASSWORD: ${MYSQL_PASSWORD}
     depends_on:
-      - clouddb
+      - moodledb
 
 volumes:
   clouddbdata:
