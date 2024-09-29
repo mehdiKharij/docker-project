@@ -36,7 +36,7 @@ pipeline {
                     def dockerCompose = 'docker compose -f docker-compose.yml --env-file dotenv up -d'
                     def dockerComposedown = "docker compose -f docker-compose.yml down"
                     sshagent(['ec2']) {
-                        sh "scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@${EC2_IP}:/home/ubuntu"
+                        sh "scp -o StrictHostKeyChecking=no dotenv docker-compose.yml ubuntu@${EC2_IP}:/home/ubuntu"
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} ${dockerComposedown}"
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} ${dockerCompose}"
                     }
