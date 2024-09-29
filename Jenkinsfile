@@ -7,7 +7,7 @@ pipeline {
             steps{
                 script {
                     echo "Build Docker Image"
-                    sh 'docker build -t phpwebapp .'
+                    sh "docker build -t phpwebapp-${JOB_NAME}:${BUILD_NUMBER} ."
                 }
             }
         }
