@@ -7,7 +7,7 @@ pipeline {
             steps{
                 script {
                     echo "Build Docker Image"
-                    sh 'docker ps -a'
+                    sh 'docker build -t phpwebapp .'
                 }
             }
         }
