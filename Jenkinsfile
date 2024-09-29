@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         ImageRegistry = 'oluwaseuna'
+        EC2_IP = '3.248.194.72'
     }
 
 
@@ -23,6 +24,19 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'docker-login', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh "echo $PASS | docker login -u $USER --password-stdin"
                         sh "docker push ${ImageRegistry}/${JOB_NAME}:${BUILD_NUMBER}"
+                    }
+                }
+            }
+        }
+
+        stage("deploy compose") {
+            steps {
+                script {
+                    echo "deploying with docker compose"
+                    def dockerCompose = 'docker compose -f docker-compose.yml up -d'
+                    sshagent(['ec2']) {
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@${EC2_IP}:/home/ubuntu"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} ${dockerCompose}"
                     }
                 }
             }
