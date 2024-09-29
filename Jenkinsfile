@@ -33,9 +33,11 @@ pipeline {
             steps {
                 script {
                     echo "deploying with docker compose"
-                    def dockerCompose = 'docker compose -f docker-compose.yml up -d'
+                    def dockerCompose = 'docker compose -f docker-compose.yml --env-file dotenv up -d'
+                    def dockerComposedown = "docker compose -f docker-compose.yml down"
                     sshagent(['ec2']) {
                         sh "scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@${EC2_IP}:/home/ubuntu"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} ${dockerComposedown}"
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} ${dockerCompose}"
                     }
                 }
