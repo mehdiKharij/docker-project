@@ -3,8 +3,8 @@ services:
   php-app:
     build:
       context: .
-    image: dammy-phpapp
-    container_name: dammy-phpapp
+    image: php-app
+    container_name: php-app
     ports:
       - "80:80"  # Expose port 80 on the container to port 8080 on localhost
     environment:
