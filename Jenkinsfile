@@ -22,7 +22,7 @@ pipeline {
                     echo "pushing Image to dockerhub"
                     withCredentials([usernamePassword(credentialsId: 'docker-login', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh "docker push ${ImageRegistry}-${JOB_NAME}:${BUILD_NUMBER} "
+                        sh "docker push ${ImageRegistry}/${JOB_NAME}:${BUILD_NUMBER}"
                     }
                 }
             }
