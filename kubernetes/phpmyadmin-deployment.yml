@@ -19,9 +19,10 @@ spec:
             - containerPort: 80
           env:
             - name: PMA_HOST
-              value: "mysql-service"
-            - name: PMA_PORT
-              value: "3306"
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: db-url
             - name: PMA_USER
               valueFrom:
                 secretKeyRef:

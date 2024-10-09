@@ -14,12 +14,15 @@ spec:
     spec:
       containers:
         - name: php-app
-          image: oluwaseuna/docker-jenkins:12
+          image: oluwaseuna/k8s-contactform:1.0
           ports:
             - containerPort: 80
           env:
             - name: DB_HOST
-              value: "mysql-service"  # Corrected service name for MySQL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: db-url
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
