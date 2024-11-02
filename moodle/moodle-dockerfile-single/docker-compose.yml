@@ -2,44 +2,41 @@ services:
   moodleapp:
     build:
       context: .
-    image: moodleapp:1.0
-    container_name: moodleapp
+      dockerfile: Moodle
+    image: moodle-web:1.0
+    container_name: moodle-web
     ports:
       - 80:80
     volumes:
       - moodledata:/var/www/moodledata
-    depends_on:
-      - moodledb
-  # MySQL DB Service
-  moodledb:
-    image: mysql:8.0.36
-    container_name: clouddb
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      - MOODLE_DATABASE_TYPE=pgsql
+      - MOODLE_DATABASE_HOST=postgres
+      - MOODLE_DATABASE_NAME=moodle
+      - MOODLE_DATABASE_USER=moodle_user
+      - MOODLE_DATABASE_PASSWORD=moodle_password
+    depends_on:
+      - postgres
+  
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=moodle
+      - POSTGRES_USER=moodle_user
+      - POSTGRES_PASSWORD=moodle_password
     volumes:
-      - clouddbdata:/var/lib/mysql
-    # environment:
-      # - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      # - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - pgdata:/var/lib/postgresql/data
 
-  # phpmyadmin to Manage MySQL DB
-  phpmyadmin:
-    image: phpmyadmin
-    container_name: phpmyadmin
-    restart: always
+  pgadmin:
+    image: dpage/pgadmin4
     ports:
-      - "8081:80"
+      - "81:80"
     environment:
-      PMA_HOST: clouddb
-      PMA_PORT: 3306
-      PMA_USER: ${MYSQL_USER}
-      PMA_PASSWORD: ${MYSQL_PASSWORD}
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
     depends_on:
-      - moodledb
+      - postgres
 
 volumes:
-  clouddbdata:
+  pgdata:
   moodledata:
