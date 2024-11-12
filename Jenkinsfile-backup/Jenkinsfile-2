@@ -3,9 +3,9 @@ pipeline {
 
     environment {
         ImageRegistry = 'oluwaseuna'
-        EC2_IP = '34.247.217.251'
+        EC2_IP = '3.248.194.72'
         DockerComposeFile = 'docker-compose.yml'
-        DotEnvFile = '.env'
+        DotEnvFile = 'dotenv'
     }
 
     stages {
