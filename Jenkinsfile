@@ -37,13 +37,15 @@ pipeline {
                 script {
                     echo "Deploying with Docker Compose..."
                     sshagent(['ec2']) {
+                        // Append DOCKER_IMAGE to the existing .env file
+                        sh "echo 'DOCKER_IMAGE=${DockerImageTag}' >> .env"
+
                         sh """
                         # Copy files to EC2 instance
                         scp -o StrictHostKeyChecking=no ${DotEnvFile} ${DockerComposeFile} ubuntu@${EC2_IP}:/home/ubuntu
 
                         # Pull the latest Docker image and restart services
                         ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} "
-                            export DOCKER_IMAGE=${DockerImageTag} && \
                             docker compose -f /home/ubuntu/${DockerComposeFile} --env-file /home/ubuntu/${DotEnvFile} down && \
                             docker compose -f /home/ubuntu/${DockerComposeFile} --env-file /home/ubuntu/${DotEnvFile} up -d
                         "
