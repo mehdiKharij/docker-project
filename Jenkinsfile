@@ -37,6 +37,8 @@ pipeline {
                 script {
                     echo "Deploying with Docker Compose..."
                     sshagent(['ec2']) {
+                        def dockerImageFullTag = "${ImageRegistry}/${JOB_NAME}:${BUILD_NUMBER}"
+                        sh "echo 'DC_IMAGE_NAME=${dockerImageFullTag}' >> ${DotEnvFile}"
                         sh """
                         # Copy files to EC2 instance
                         scp -o StrictHostKeyChecking=no ${DotEnvFile} ${DockerComposeFile} ubuntu@${EC2_IP}:/home/ubuntu
