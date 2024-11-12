@@ -1,7 +1,7 @@
 services:
   # PHP Application
   php-app:
-    image: oluwaseuna/docker-build-push:1
+    image: oluwaseuna/docker-build-push:3
     container_name: php-app
     ports:
       - "80:80"  # Expose port 80 on the container to port 8080 on localhost
@@ -30,7 +30,7 @@ services:
 
   # phpMyAdmin for Database Administration
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin
     container_name: phpmyadmin
     restart: always
     ports:
