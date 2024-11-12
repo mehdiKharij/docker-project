@@ -1,7 +1,7 @@
 services:
   # PHP Application
   php-app:
-    image: oluwaseuna/docker-build-push:3
+    image: oluwaseuna/docker:1
     container_name: php-app
     ports:
       - "80:80"  # Expose port 80 on the container to port 8080 on localhost
@@ -40,7 +40,6 @@ services:
       PMA_PORT: 3306
       PMA_USER: ${MYSQL_USER}
       PMA_PASSWORD: ${MYSQL_PASSWORD}
-      # MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     depends_on:
       - db
 
