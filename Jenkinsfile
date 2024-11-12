@@ -43,7 +43,7 @@ pipeline {
 
                         # Pull the latest Docker image and restart services
                         ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} "
-                            export docker_image=${DockerImageTag} && \
+                            export DC_IMAGE_NAME=${DockerImageTag} && \
                             docker compose -f /home/ubuntu/${DockerComposeFile} --env-file /home/ubuntu/${DotEnvFile} down && \
                             docker compose -f /home/ubuntu/${DockerComposeFile} --env-file /home/ubuntu/${DotEnvFile} up -d
                         "
