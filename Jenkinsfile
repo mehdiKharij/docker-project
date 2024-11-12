@@ -37,15 +37,14 @@ pipeline {
                 script {
                     echo "Deploying with Docker Compose..."
                     sshagent(['ec2']) {
-                        def dockerImageFullTag = "${ImageRegistry}/${JOB_NAME}:${BUILD_NUMBER}"
-                        sh "echo '\nDC_IMAGE_NAME=${dockerImageFullTag}' >> ${DotEnvFile}"
+                        sh "echo '\nDC_IMAGE_NAME=${DockerImageTag}' >> ${DotEnvFile}"
                         sh """
                         # Copy files to EC2 instance
                         scp -o StrictHostKeyChecking=no ${DotEnvFile} ${DockerComposeFile} ubuntu@${EC2_IP}:/home/ubuntu
 
                         # Pull the latest Docker image and restart services
                         ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} "
-                            export DC_IMAGE_NAME=${dockerImageFullTag} && \
+                            export DC_IMAGE_NAME=${DockerImageTag} && \
                             docker compose -f /home/ubuntu/${DockerComposeFile} --env-file /home/ubuntu/${DotEnvFile} down && \
                             docker compose -f /home/ubuntu/${DockerComposeFile} --env-file /home/ubuntu/${DotEnvFile} up -d
                         "
