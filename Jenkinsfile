@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         ImageRegistry = 'oluwaseuna'
-        EC2_IP = '34.255.98.175'
+        EC2_IP = '34.254.177.213'
         DockerComposeFile = 'docker-compose.yml'
         DotEnvFile = '.env'
         DockerImageTag = "${ImageRegistry}/${JOB_NAME}:${BUILD_NUMBER}"
@@ -44,6 +44,7 @@ pipeline {
                         # Pull the latest Docker image and restart services
                         ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} "
                             export DC_IMAGE_NAME=${DockerImageTag} && \
+                            echo ${DC_IMAGE_NAME} && \
                             docker compose -f /home/ubuntu/${DockerComposeFile} --env-file /home/ubuntu/${DotEnvFile} down && \
                             docker compose -f /home/ubuntu/${DockerComposeFile} --env-file /home/ubuntu/${DotEnvFile} up -d
                         "
