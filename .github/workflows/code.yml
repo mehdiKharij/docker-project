@@ -47,10 +47,15 @@ jobs:
             
         - name: Print config file
           run: cat ~/.kube/config
-        
+
         - name: Login to ECR
-          run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=AWS  --docker-password=$(aws ecr get-login-password)
-        
+          run: |
+            kubectl get secret regcred || \
+            kubectl create secret docker-registry regcred \
+              --docker-server=${{ secrets.REGISTRY }} \
+              --docker-username=AWS \
+              --docker-password=$(aws ecr get-login-password)
+              
         - name: Deploy with Helm
           uses: bitovi/github-actions-deploy-eks-helm@v1.2.12
           with:
