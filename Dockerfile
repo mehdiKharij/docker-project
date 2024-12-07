@@ -1,7 +1,7 @@
 # Use the official PHP 8.3 image with Apache
 FROM php:8.3-apache
 
-# Set working directory
+## Set working directory
 WORKDIR /var/www/html
 
 ## Install dependencies and enable necessary Apache modules in a single RUN command

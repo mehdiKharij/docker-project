@@ -1,7 +1,8 @@
 name: webapp-actions
 on:
-  workflow_dispatch:
-
+  push:
+    branches:
+        - contactform-actions
 env:
   AWS_REGION: ${{ vars.REGION }}
   ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
