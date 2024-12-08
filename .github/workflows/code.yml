@@ -43,10 +43,7 @@ jobs:
         
         - name: Get Kubernetes config
           id: getconfig
-          run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER }} --region ${{ env.AWS_REGION }} 
-            
-        - name: Print config file
-          run: cat ~/.kube/config
+          run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER }} --region ${{ env.AWS_REGION }}
 
         - name: Login to ECR
           run: |
@@ -55,7 +52,7 @@ jobs:
               --docker-server=${{ secrets.REGISTRY }} \
               --docker-username=AWS \
               --docker-password=$(aws ecr get-login-password)
-              
+
         - name: Deploy with Helm
           uses: bitovi/github-actions-deploy-eks-helm@v1.2.12
           with:
