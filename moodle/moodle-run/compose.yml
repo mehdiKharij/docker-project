@@ -21,9 +21,6 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - clouddbdata:/var/lib/mysql
-    # environment:
-      # - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      # - MYSQL_DATABASE=${MYSQL_DATABASE}
 
   # phpmyadmin to Manage MySQL DB
   phpmyadmin:

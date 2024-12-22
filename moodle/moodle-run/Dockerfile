@@ -16,8 +16,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Clone the Moodle repository and check out the desired branch
 RUN git clone git://git.moodle.org/moodle.git && \
     cd moodle && \
-    git branch --track MOODLE_404_STABLE origin/MOODLE_404_STABLE && \
-    git checkout MOODLE_404_STABLE && \
+    git branch --track MOODLE_405_STABLE origin/MOODLE_405_STABLE && \
+    git checkout MOODLE_405_STABLE && \
     cp -rf ./* /var/www/html/
 
 # Set PHP configurations

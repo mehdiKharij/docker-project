@@ -9,6 +9,7 @@ services:
       - 80:80
     volumes:
       - moodledata:/var/www/moodledata
+      - moodlefile:/var/www/html
     depends_on:
       - postgres
   
@@ -34,3 +35,4 @@ services:
 volumes:
   pgdata:
   moodledata:
+  moodlefile:
